@@ -16,5 +16,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::get('/record/input', [ProfileController::class, 'input'])->name('record.input');
+// コントローラの部分は後で変更
+Route::get('/evaluation', [ProfileController::class, 'evaluation'])->name('evaluation');
+// コントローラの部分は後で変更
 
 require __DIR__.'/auth.php';
