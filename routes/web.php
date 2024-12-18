@@ -2,14 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/Home', function () {
+    return view('Home');
+})->middleware(['auth', 'verified'])->name('Home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -20,5 +21,7 @@ Route::get('/record/input', [ProfileController::class, 'input'])->name('record.i
 // コントローラの部分は後で変更
 Route::get('/evaluation', [ProfileController::class, 'evaluation'])->name('evaluation');
 // コントローラの部分は後で変更
+Route::get('/', [ItemController::class, 'index'])->name('home');
+Route::get('/item', [ItemController::class, 'showItem'])->name('item.show');
 
 require __DIR__.'/auth.php';
