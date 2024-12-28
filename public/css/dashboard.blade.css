@@ -1,0 +1,12 @@
+.comment-bubble {
+    position: relative;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 15px 20px;
+    background: #ffffff;
+    border-radius: 15px;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+}
