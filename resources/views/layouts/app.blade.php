@@ -33,7 +33,7 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @yield('content')  <!-- ここでcontentセクションを表示 -->
             </main>
         </div>
     </body>
