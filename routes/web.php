@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/record/input', [RecodeController::class, 'input'])->name('record.input');
 // コントローラの部分は後で変更
+
+
+
 Route::get('/evaluation', [ProfileController::class, 'evaluation'])->name('evaluation');
 // コントローラの部分は後で変更
 
