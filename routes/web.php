@@ -26,12 +26,19 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/record/input', [RecodeController::class, 'input'])->name('record.input');
 // コントローラの部分は後で変更
-
+Route::get('/dashboard', [CommentController::class, 'showRandomComment'])->name('dashboard');
+Route::get('/record/input', [ProfileController::class, 'input'])->name('record.input');
 
 
 Route::get('/evaluation', [ProfileController::class, 'evaluation'])->name('evaluation');
 // コントローラの部分は後で変更
+// ここで'/home'のルートを1つに統一
+Route::get('/home', [itemController::class, 'index'])->name('home');
 
+Route::post('/items/give', [ItemController::class, 'giveItem'])->name('items.give');
+Route::get('/items/give', [ItemController::class, 'showGiveItemForm'])->name('items.give.form');
+Route::get('/items', [ItemController::class, 'index'])->name('items.index');
+Route::get('/items/detail', [ItemController::class, 'showItem'])->name('items.detail');
 
 
 
