@@ -5,8 +5,8 @@
         </h2>
         <script src="https://cdn.tailwindcss.com"></script>
     </x-slot>
-    <h3>一日のカロリー摂取目標</h3>
-    <h3>今日の摂取カロリー</h3>
+    <h3>一日のカロリー摂取目標  :  2000 kcal</h3>
+    <h3>今日の摂取カロリー  :  {{ $totalCalories }} kcal</h3>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-bladewind::tab-group name="pills-blue-tab" style="pills" class="ml-8">
@@ -24,48 +24,47 @@
                                 <!-- セット1 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('食パン')">食パン</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('ご飯')">ご飯</x-bladewind::button>
                                 </div>
 
                                 <!-- セット2 -->
                                 
                                         <div class="flex flex-col items-center space-y-2">
                                             <img src="path-to-your-image2.jpg" alt="写真2" class="w-16 h-16 rounded-full">
-                                            <x-bladewind::button ring_width="4" onclick="document.getElementById('morning').submit();">
-                                                ご飯</x-bladewind::button>
+                                            <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
                                         </div>
                                 
 
                                 <!-- セット3 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image3.jpg" alt="写真3" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('卵料理（一個）')">卵料理（一個）</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('卵料理')">卵料理</x-bladewind::button>
                                 </div>
 
                                 <!-- セット4 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image4.jpg" alt="写真4" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('牛乳')">牛乳</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('カレー')">カレー</x-bladewind::button>
                                 </div>
                                 <!--セット5-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('パスタ')">パスタ</x-bladewind::button>
                                 </div>
                                 <!--セット6-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('サラダ')">サラダ</x-bladewind::button>
                                 </div>
                                 <!--セット7-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('唐揚げ')">唐揚げ</x-bladewind::button>
                                 </div>
                                 <!--セット8-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('ラーメン')">ラーメン</x-bladewind::button>
                                 </div>
                             </div>
                         </x-bladewind::card>
@@ -78,45 +77,45 @@
                                 <!-- セット1 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('食パン')">食パン</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('ご飯')">ご飯</x-bladewind::button>
                                 </div>
 
                                 <!-- セット2 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image2.jpg" alt="写真2" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('ご飯')">ご飯</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
                                 </div>
 
                                 <!-- セット3 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image3.jpg" alt="写真3" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('卵料理（一個）')">卵料理（一個）</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('卵料理')">卵料理</x-bladewind::button>
                                 </div>
 
                                 <!-- セット4 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image4.jpg" alt="写真4" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('牛乳')">牛乳</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('カレー')">カレー</x-bladewind::button>
                                 </div>
                                 <!--セット5-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('パスタ')">パスタ</x-bladewind::button>
                                 </div>
                                 <!--セット6-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('サラダ')">サラダ</x-bladewind::button>
                                 </div>
                                 <!--セット7-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('唐揚げ')">唐揚げ</x-bladewind::button>
                                 </div>
                                 <!--セット8-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('ラーメン')">ラーメン</x-bladewind::button>
                                 </div>
                             </div>
                         </x-bladewind::card>
@@ -129,45 +128,45 @@
                                 <!-- セット1 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('食パン')">食パン</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('ご飯')">ご飯</x-bladewind::button>
                                 </div>
 
                                 <!-- セット2 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image2.jpg" alt="写真2" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('ご飯')">ご飯</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
                                 </div>
 
                                 <!-- セット3 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image3.jpg" alt="写真3" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('卵料理（一個）')">卵料理（一個）</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('卵料理')">卵料理</x-bladewind::button>
                                 </div>
 
                                 <!-- セット4 -->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image4.jpg" alt="写真4" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('牛乳')">牛乳</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('カレー')">カレー</x-bladewind::button>
                                 </div>
                                 <!--セット5-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('パスタ')">パスタ</x-bladewind::button>
                                 </div>
                                 <!--セット6-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('サラダ')">サラダ</x-bladewind::button>
                                 </div>
                                 <!--セット7-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('唐揚げ')">唐揚げ</x-bladewind::button>
                                 </div>
                                 <!--セット8-->
                                 <div class="flex flex-col items-center space-y-2">
                                     <img src="path-to-your-image1.jpg" alt="写真1" class="w-16 h-16 rounded-full">
-                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('お味噌汁')">お味噌汁</x-bladewind::button>
+                                    <x-bladewind::button ring_width="4" onclick="saveRecipe('ラーメン')">ラーメン</x-bladewind::button>
                                 </div>
                             </div>
                         </x-bladewind::card>
@@ -176,9 +175,14 @@
                 </x-bladewind::tab-body>
             </x-bladewind::tab-group>
             <div class="mt-6">
-                <h3 class="text-xl font-semibold">食べた朝食:</h3>
-                <ul id="morning-list">
-                <!-- 選択された料理名をここに表示 -->
+                <h3 class="text-xl font-semibold">今日の食事  
+                
+                </h3>
+                <div style="display: flex; gap: 20px;">
+                    @foreach ($recipes as $recipe)
+                        <span>{{ $recipe->name }}</span>
+                    @endforeach
+                </div>
                 </ul>
             </div>
         </div>

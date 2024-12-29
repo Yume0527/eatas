@@ -1,20 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 
-
-use Illuminate\Http\Request;
-
-class RecodeController extends Controller
+class MealController extends Controller
 {
-    //
-    public function input()
-    {
-        // ロジックをここに記述
-        return view('record.input'); // ビューを返す例
-    }
-
+    /**
+     * 今日のカロリー合計を取得する
+     *
+     * @return \Illuminate\View\View
+     */
     public function getTodayCalories()
     {
         // 今日の日付を取得
@@ -26,13 +22,8 @@ class RecodeController extends Controller
             ->whereDate('recipes.created_at', $today)
             ->sum('dishes.calories'); // カロリーを合算
 
-        $recipes = DB::table('recipes')
-            ->whereDate('recipes.created_at', $today)->get(['name']); // 今日の料理名を取得
-
         // ビューにデータを渡して表示
-        return view('record.input', ['totalCalories' => $totalCalories, 'recipes' => $recipes
-    ]);
+        return view('record.input', ['totalCalories' => $totalCalories]);
     }
-
-    
 }
+
