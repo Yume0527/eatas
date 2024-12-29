@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/dashboard', [CommentController::class, 'showRandomComment'])->name('dashboard');
-Route::get('/record/input', [ProfileController::class, 'input'])->name('record.input');
+Route::get('/record/input', [RecodeController::class, 'input'])->name('record.input');
 
 
 Route::get('/evaluation', [ProfileController::class, 'evaluation'])->name('evaluation');
