@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecodeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\itemController;
 use App\Http\Controllers\MealController;
 
@@ -35,7 +36,7 @@ Route::get('/dashboard', [CommentController::class, 'showRandomComment'])->name(
 Route::get('/record/input', [RecodeController::class, 'input'])->name('record.input');
 
 
-Route::get('/evaluation', [ProfileController::class, 'evaluation'])->name('evaluation');
+Route::get('/evaluation', [EvaluationController::class, 'index'])->name('evaluation');
 
 
 
