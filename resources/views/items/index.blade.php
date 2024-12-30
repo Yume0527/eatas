@@ -1,3 +1,5 @@
+<x-app-layout>
+    
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -12,14 +14,20 @@
         .progress { background: #a4d792; height: 100%; width: 50%; } /* 例: 50% */
         .btn { background: #f8e7a2; border: none; padding: 10px 20px; cursor: pointer; }
         .btn-circle { background: red; color: white; border-radius: 50%; padding: 10px; }
-        .character-container { text-align: center; margin-top: 20px; position: relative; }
+        .character-container { text-align: center;
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; }
         .message-container { margin-top: 20px; }
         
         /* 吹き出しのスタイル */
         .speech-bubble {
             position: absolute;
             top: -5px; /* 吹き出しの位置 */
-            left: 50%;
+            left: 80%;
             transform: translateX(-50%);
             background: #f8e7a2;
             padding: 10px;
@@ -45,7 +53,6 @@
 <body>
     <div class="header">
         <span>{{ now()->format('Y年m月d日') }}</span>
-        <button>お知らせ</button>
     </div>
 
     <div class="content">
@@ -68,10 +75,8 @@
     </div>
 
     <div class="footer">
-        <button>ホーム</button>
-        <button>発言入力</button>
-        <button>発言評価</button>
-        <button>記録</button>
+        
     </div>
 </body>
 </html>
+    </x-app-layout>

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Character;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\User;
@@ -33,39 +34,70 @@ class itemController extends Controller
     public function showGiveItemForm()
 {
     // 現在ログインしているユーザーのアイテムを取得
-     $items = Item::where('owner_id', auth()->id())->get(); 
-     $users = User::where('id', '!=', auth()->id())->get();
-
+    $items = Item::where('owner_id', auth()->id())->get(); 
+    
     // アイテムがない場合の対応
     if ($items->isEmpty()) {
         $items = [];
     }
 
+    // 他のユーザーを取得
+    $users = User::where('id', '!=', auth()->id())->get();
+
+    // 現在ログインしているユーザーのキャラクター情報を取得
+    $character = Character::where('user_id', auth()->id())->first(); // 例: ユーザーIDに紐づくキャラクターを取得
+
+    // キャラクターが見つからない場合
+    if (!$character) {
+        // キャラクターがない場合の処理（例えば、新しくキャラクターを作成するなど）
+        $character = new Character();
+        $character->gauge = 0; // 仮の値として0を設定
+    }
+
     // item.blade.php にデータを渡して表示
-    return view('item', compact('items', 'users'));
+    return view('item', compact('items', 'users', 'character'));
 }
 
+
     // アイテムをあげる処理
+   
     public function giveItem(Request $request)
-    {
-        $request->validate([
-            'item_id' => 'required|exists:items,id',
-            'user_id' => 'required|exists:users,id',
-        ]);
+{
+    // フォームから送られてきたデータを検証
+    $request->validate([
+        'item_id' => 'required|exists:items,id',
+    ]);
 
-        $item = Item::find($request->item_id);
+    // アイテムを取得
+    $item = Item::find($request->item_id);
 
-
-        if ($item->owner_id !== auth()->id()) {
-            return redirect()->back()->with('error', 'あなたの所有物ではありません。');
-        }
-
-        // アイテムを取得
-        
-        // アイテムの所有者を変更
-        $item->owner_id = $request->user_id;
-        $item->save();
-        
-       return redirect()->route('items')->with('success', 'アイテムをあげました！');
+    // 現在のユーザーがアイテムの所有者であるか確認
+    if ($item->owner_id !== auth()->id()) {
+        return redirect()->back()->with('error', 'あなたの所有物ではありません。');
     }
+
+    // 現在ログインしているユーザーのキャラクターを取得
+    $character = Character::where('user_id', auth()->id())->first();
+
+    // キャラクターが見つからない場合
+    if (!$character) {
+        return redirect()->back()->with('error', 'キャラクターが見つかりません。');
+    }
+
+    // アイテムを渡した結果、キャラクターのゲージを増やす
+    $character->gauge += 10;  // ゲージを10増やす（アイテムによって増える量は変更可能）
+    $character->save();
+
+    // アイテムの所有者を変更
+    $item->owner_id = $character->user_id; // キャラクターのユーザーにアイテムを渡す
+    $item->save();
+
+   // アイテムを渡した後、成功メッセージをセッションに格納
+return redirect()->route('index')->with('success', 'アイテムを渡しました！');
+// もしくは
+return back()->with('error', '問題が発生しました。');
+
+}
+
+
 }
