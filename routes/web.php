@@ -37,6 +37,8 @@ Route::get('/record/input', [RecodeController::class, 'input'])->name('record.in
 
 
 Route::get('/evaluation', [EvaluationController::class, 'index'])->name('evaluation');
+Route::get('/evaluation', [EvaluationController::class, 'getEvaluation'])->name('evaluation');
+Route::post('/save-evaluation', [EvaluationController::class, 'saveEvaluation'])->name('save.evaluation');
 
 
 
