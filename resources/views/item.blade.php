@@ -19,10 +19,13 @@
 
         <!-- アイテムをあげるフォーム -->
         <form action="{{ route('items.give') }}" method="POST">
+            
             @csrf
             <!-- 必要に応じてアイテムIDなどを追加 -->
-            <input type="hidden" name="item_id" value="chocolate">  <!-- 例としてitem_idを指定 -->
+          
+            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
             <button type="submit" class="btn">これをあげる</button>
+            
         </form>
     </div>
 </body>

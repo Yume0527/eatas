@@ -42,12 +42,13 @@ Route::get('/record/input', [RecodeController::class, 'input'])->name('record.in
 Route::post('/recipes', [RecipeController::class, 'store'])->name('recipe.store');
 
 
-
-Route::get('/home', [itemController::class, 'index'])->name('home');
+Route::get('/index', [itemController::class, 'index'])->name('index');
+Route::get('/items/give', [itemController::class, 'give'])->name('items.give');
+Route::get('/', [itemController::class, 'giveItem'])->name('giveItem');
 
 Route::post('/items/give', [ItemController::class, 'giveItem'])->name('items.give');
 Route::get('/items/give', [ItemController::class, 'showGiveItemForm'])->name('items.give.form');
-Route::get('/items', [ItemController::class, 'index'])->name('items.index');
+Route::get('/items', [ItemController::class, 'index'])->name('items');
 Route::get('/items/detail', [ItemController::class, 'showItem'])->name('items.detail');
 
 require __DIR__.'/auth.php';
