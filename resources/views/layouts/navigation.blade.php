@@ -17,9 +17,7 @@
                     <x-nav-link :href="route('record.input')" :active="request()->routeIs('record.input')">
                         {{ __('食事入力') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('evaluation')" :active="request()->routeIs('evaluation')">
-                        {{ __('食事評価') }}
-                    </x-nav-link>
+                    
                 </div>
             </div>
             <!-- Settings Dropdown -->
@@ -78,9 +76,7 @@
             <x-responsive-nav-link :href="route('record.input')" :active="request()->routeIs('record.input')">
                 {{ __('食事入力') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('evaluation')" :active="request()->routeIs('evaluation')">
-                {{ __('食事評価') }}
-            </x-responsive-nav-link>
+            
         </div>
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">

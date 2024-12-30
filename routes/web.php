@@ -36,13 +36,7 @@ Route::get('/dashboard', [CommentController::class, 'showRandomComment'])->name(
 Route::get('/record/input', [RecodeController::class, 'input'])->name('record.input');
 
 
-Route::get('/evaluation', [EvaluationController::class, 'index'])->name('evaluation');
-Route::get('/evaluation', [EvaluationController::class, 'getEvaluation'])->name('evaluation');
-Route::post('/save-evaluation', [EvaluationController::class, 'saveEvaluation'])->name('save.evaluation');
 
-
-
-Route::get('/record/input', [RecodeController::class, 'getTodayCalories'])->name('record.input');
 
 
 Route::post('/recipes', [RecipeController::class, 'store'])->name('recipe.store');
