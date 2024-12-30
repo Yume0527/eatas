@@ -253,4 +253,50 @@
             }
         }
     </script>
+   <!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>フッターデザイン</title>
+    <style>
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #fff9e6; /* 優しいクリーム色 */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .footer button {
+            background-color: #ffcc33; /* 明るい黄色 */
+            color: #333; /* 濃い文字色で視認性を確保 */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .footer button:hover {
+            background-color: #ffb400; /* ホバー時に少し濃い黄色 */
+        }
+    </style>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</head>
+<body>
+    <div class="footer">
+       
+        <button onclick="navigateTo('/index')">ホームに戻る</button>
+    </div>
+</body>
+</html>
+
 </x-app-layout>

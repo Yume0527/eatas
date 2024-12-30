@@ -45,11 +45,11 @@ class itemController extends Controller
     $users = User::where('id', '!=', auth()->id())->get();
 
     // 現在ログインしているユーザーのキャラクター情報を取得
-    $character = Character::where('user_id', auth()->id())->first(); // 例: ユーザーIDに紐づくキャラクターを取得
+    $character = Character::where('user_id', auth()->id())->first(); 
 
     // キャラクターが見つからない場合
     if (!$character) {
-        // キャラクターがない場合の処理（例えば、新しくキャラクターを作成するなど）
+        
         $character = new Character();
         $character->gauge = 0; // 仮の値として0を設定
     }
