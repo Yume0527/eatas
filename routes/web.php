@@ -4,7 +4,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecodeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\itemController;
 use App\Http\Controllers\MealController;
 
@@ -35,7 +34,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard', [CommentController::class, 'showRandomComment'])->name('dashboard');
 Route::get('/record/input', [RecodeController::class, 'input'])->name('record.input');
 
-
+Route::post('/record/input', [RecodeController::class, 'uploadImages'])->name('upload.images');
 
 
 
