@@ -317,6 +317,84 @@
     }
     </script>
     
+    <!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>送信ボタン</title>
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 5vh;
+            margin: 0;
+            margin-bottom: 50px; /* 下に50pxの余白を追加 */
+        }
+
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <form id="resultForm" action="/submit" method="POST">
+            <button type="submit" id="submitButton">今日の結果を送信する</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const submitButton = document.getElementById('submitButton');
+            const form = document.getElementById('resultForm');
+            const storageKey = 'dailySubmission';
+
+            // 現在の日付を取得
+            const today = new Date().toISOString().split('T')[0];
+
+            // ローカルストレージの確認
+            const lastSubmissionDate = localStorage.getItem(storageKey);
+
+            if (lastSubmissionDate === today) {
+                // 送信済みの場合
+                submitButton.textContent = 'きょうの結果は送信済みです';
+                submitButton.disabled = true;
+            }
+
+            // フォーム送信時
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                // ダミー送信処理
+                setTimeout(() => {
+                    console.log('送信成功');
+
+                    // ローカルストレージに保存
+                    localStorage.setItem(storageKey, today);
+                    submitButton.textContent = 'きょうの結果は送信済みです';
+                    submitButton.disabled = true;
+                }, 500); // サーバー通信を模擬
+            });
+        });
+    </script>
+</body>
+</html>
+
+    
 </x-app-layout>
 
 
