@@ -70,7 +70,14 @@
             </div>
             
             <img src="{{ asset('images/Character.png') }}" alt="キャラクター" width="150">
-            <button class="btn" onclick="location.href='{{ route('items.give') }}'">アイテムをあげる</button>
+            @if($items->isEmpty())
+                <p>渡せるアイテムがありません。</p>
+                <button class="btn" disabled>アイテムをあげる</button>
+            @else
+                <button class="btn" onclick="location.href='{{ route('items.give') }}'">アイテムをあげる</button>
+            @endif
+
+           
         </div>
 
     </div>

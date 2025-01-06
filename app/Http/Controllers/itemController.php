@@ -10,11 +10,12 @@ class itemController extends Controller
 {
     public function index()
     {
-        // アイテムをデータベースから取得（例: すべてのアイテム）
+         $items = \App\Models\Item::where('owner_id', auth()->id())->get();
+        // アイテムをデータベースから取得
         $users = \App\Models\User::all();
 
         // アイテム一覧をビューに渡す
-          return view('items.index', compact('users'));
+          return view('items.index', compact('items','users'));
     }
     // アイテム表示メソッド
     public function showItem()
@@ -94,7 +95,7 @@ class itemController extends Controller
 
    // アイテムを渡した後、成功メッセージをセッションに格納
 return redirect()->route('index')->with('success', 'アイテムを渡しました！');
-// もしくは
+
 return back()->with('error', '問題が発生しました。');
 
 }
