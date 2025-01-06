@@ -45,9 +45,9 @@ Route::get('/index', [itemController::class, 'index'])->name('index');
 Route::get('/items/give', [itemController::class, 'give'])->name('items.give');
 Route::get('/', [itemController::class, 'giveItem'])->name('giveItem');
 
-Route::post('/items/give', [ItemController::class, 'giveItem'])->name('items.give');
-Route::get('/items/give', [ItemController::class, 'showGiveItemForm'])->name('items.give.form');
-Route::get('/items', [ItemController::class, 'index'])->name('items');
-Route::get('/items/detail', [ItemController::class, 'showItem'])->name('items.detail');
+Route::post('/items/give', [itemController::class, 'giveItem'])->name('items.give');
+Route::get('/items/give', [itemController::class, 'showGiveItemForm'])->name('items.give.form');
+Route::get('/items', [itemController::class, 'index'])->name('items');
+Route::get('/items/detail', [itemController::class, 'showItem'])->name('items.detail');
 
 require __DIR__.'/auth.php';
