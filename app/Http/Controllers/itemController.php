@@ -85,20 +85,18 @@ class itemController extends Controller
         return redirect()->back()->with('error', 'キャラクターが見つかりません。');
     }
 
-    // アイテムを渡した結果、キャラクターのゲージを増やす
-    $character->gauge += 10;  // ゲージを10増やす（アイテムによって増える量は変更可能）
+    // キャラクターのゲージを増加
+    $character->gauge += 10; // ゲージ増加量は変更可能
     $character->save();
 
     // アイテムの所有者を変更
-    $item->owner_id = $character->user_id; // キャラクターのユーザーにアイテムを渡す
+    $item->owner_id = auth()->id(); // 現在のユーザーに所有権を戻す（必要に応じて変更）
     $item->save();
 
-   // アイテムを渡した後、成功メッセージをセッションに格納
-return redirect()->route('index')->with('success', 'アイテムを渡しました！');
-
-return back()->with('error', '問題が発生しました。');
-
+    // アイテムを渡した後、成功メッセージをセッションに格納
+    return redirect()->route('index')->with('success', 'アイテムを渡しました！');
 }
+
 
 
 }
