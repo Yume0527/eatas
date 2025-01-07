@@ -14,7 +14,7 @@
                 <x-slot:headings>
                     <x-bladewind::tab-heading name="morning" active="true" label="朝" />
                     <x-bladewind::tab-heading name="lunch" label="昼" />
-                    <x-bladewind::tab-heading name="night" label="夜" />
+                    <x-bladewind::tab-heading name="night" label="夕" />
                 </x-slot:headings>
 
                 <x-bladewind::tab-body>
@@ -391,6 +391,55 @@
             });
         });
     </script>
+    <script>
+            document.addEventListener('DOMContentLoaded', () => {
+        const nutrientKeys = ['carbohydrate-night-image', 'protein-night-image', 'vegetable-night-image'
+            ,'carbohydrate-image', 'protein-image', 'vegetable-image','carbohydrate-lunch-image', 'protein-lunch-image', 'vegetable-lunch-image'
+        ];
+        const allSaved = nutrientKeys.every(key => localStorage.getItem(key));
+
+        if (allSaved) {
+            // 三大栄養素がすべて保存されている場合、サーバーに保存リクエストを送信
+            fetch('/save-item', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({
+                    name: 'チョコレート', // アイテム名
+                    description: '甘いおやつ', // 説明
+                    owner_id: 1, // 所有者ID (適切な値を設定)
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('保存成功:', data);
+            })
+            .catch(error => {
+                console.error('保存エラー:', error);
+            });
+        } else {
+            // 保存されていない場合、ゲージテーブルをリセット
+            fetch('/reset-gauge', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('ゲージリセット成功:', data);
+            })
+            .catch(error => {
+                console.error('ゲージリセットエラー:', error);
+            });
+        }
+    });
+
+    </script>
+
 </body>
 </html>
 

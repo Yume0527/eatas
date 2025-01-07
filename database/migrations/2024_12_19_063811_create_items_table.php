@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->string('name'); // 必須のアイテム名
             $table->text('description')->nullable(); // アイテムの説明
-            $table->unsignedBigInteger('owner_id'); 
+            $table->unsignedBigInteger('owner_id'); // 所有者のID
             $table->timestamps();
         });
+        
     }
 
     /**

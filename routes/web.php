@@ -4,8 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecodeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\itemController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\GaugeController;
 
 use App\Http\Controllers\RecipeController;
 
@@ -24,10 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // アイテムをあげるフォーム表示
-    Route::get('/item', [itemController::class, 'showGiveItemForm'])->name('item.show');
+    Route::get('/item', [ItemController::class, 'showGiveItemForm'])->name('item.show');
 
     // アイテムをあげる処理
-    Route::post('/item', [itemController::class, 'giveItem'])->name('item.give');
+    Route::post('/item', [ItemController::class, 'giveItem'])->name('item.give');
 });
 
 
@@ -35,19 +36,21 @@ Route::get('/dashboard', [CommentController::class, 'showRandomComment'])->name(
 Route::get('/record/input', [RecodeController::class, 'input'])->name('record.input');
 
 Route::post('/record/input', [RecodeController::class, 'uploadImages'])->name('upload.images');
+Route::post('/save-item', [ItemController::class, 'store']);
+Route::delete('/reset-gauge', [GaugeController::class, 'destroy']);
 
 
 
 Route::post('/recipes', [RecipeController::class, 'store'])->name('recipe.store');
 
 
-Route::get('/index', [itemController::class, 'index'])->name('index');
-Route::get('/items/give', [itemController::class, 'give'])->name('items.give');
-Route::get('/', [itemController::class, 'giveItem'])->name('giveItem');
+Route::get('/index', [ItemController::class, 'index'])->name('index');
+Route::get('/items/give', [ItemController::class, 'give'])->name('items.give');
+Route::get('/', [ItemController::class, 'giveItem'])->name('giveItem');
 
-Route::post('/items/give', [itemController::class, 'giveItem'])->name('items.give');
-Route::get('/items/give', [itemController::class, 'showGiveItemForm'])->name('items.give.form');
-Route::get('/items', [itemController::class, 'index'])->name('items');
-Route::get('/items/detail', [itemController::class, 'showItem'])->name('items.detail');
+Route::post('/items/give', [ItemController::class, 'giveItem'])->name('items.give');
+Route::get('/items/give', [ItemController::class, 'showGiveItemForm'])->name('items.give.form');
+Route::get('/items', [ItemController::class, 'index'])->name('items');
+Route::get('/items/detail', [ItemController::class, 'showItem'])->name('items.detail');
 
 require __DIR__.'/auth.php';
