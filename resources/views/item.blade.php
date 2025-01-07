@@ -14,7 +14,7 @@
 <body>
     <!-- アイテムを与えるフォーム -->
     <div class="modal">
-        <p>今日の評価が<span>◯◯</span>だったので<br>チョコレートをゲットしました！</p>
+        <p>今日の評価が<span>良</span>だったので<br>チョコレートをゲットしました！</p>
         <img src="{{ asset('images/Chocolate.png') }}" alt="チョコレート" class="item-img">
 
         <!-- アイテムをあげるフォーム -->
