@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>アイテム獲得</title>
@@ -11,6 +12,7 @@
         .btn { position: relative; z-index: 10; }
     </style>
 </head>
+
 <body>
     <!-- アイテムを与えるフォーム -->
     <div class="modal">
@@ -18,15 +20,12 @@
         <img src="{{ asset('images/Chocolate.png') }}" alt="チョコレート" class="item-img">
 
         <!-- アイテムをあげるフォーム -->
-        <form action="{{ route('items.give') }}" method="POST">
-            
+        <form action="{{ route('gauge.store') }}" method="POST">
             @csrf
-            <!-- 必要に応じてアイテムIDなどを追加 -->
-          
             <input type="hidden" name="user_id" value="{{ auth()->id() }}">
             <button type="submit" class="btn">これをあげる</button>
-            
         </form>
     </div>
 </body>
+
 </html>
