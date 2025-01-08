@@ -219,6 +219,69 @@
                     </x-bladewind::tab-content>
                 </x-bladewind::tab-body>
             </x-bladewind::tab-group>
+            <!DOCTYPE html>
+                <html lang="ja">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>目標設定</title>
+                    @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- 必要ならアセットを読み込み -->
+                </head>
+                <body class="bg-gray-100 p-6">
+                    <div class="flex items-center gap-4">
+                        <!-- テキスト入力欄 -->
+                        <input type="text" 
+                            id="goal-input"
+                            class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                            placeholder="目標を入力">
+
+                        <!-- トグルスイッチ（直接HTMLで実装） -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-700">目標達成</span>
+                            <input type="checkbox" 
+                                id="goal-toggle" 
+                                class="form-checkbox text-blue-500" />
+                        </div>
+                    </div>
+
+                    <script>
+                        // DOMが完全に読み込まれた後に実行
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // 入力欄のテキストをローカルストレージから取得してセット
+                            const savedGoal = localStorage.getItem('goal');
+                            if (savedGoal) {
+                                document.getElementById('goal-input').value = savedGoal;
+                            }
+
+                            // トグルの状態をローカルストレージから取得してセット
+                            const goalToggle = document.getElementById('goal-toggle');
+                            if (goalToggle) { // goal-toggleが存在する場合のみ処理を行う
+                                const savedToggleState = localStorage.getItem('goal_toggle_state');
+                                if (savedToggleState === 'true') {
+                                    goalToggle.checked = true;
+                                } else {
+                                    goalToggle.checked = false;
+                                }
+
+                                // トグルの状態が変更されたときにローカルストレージに保存
+                                goalToggle.addEventListener('change', function() {
+                                    const toggleState = this.checked;
+                                    localStorage.setItem('goal_toggle_state', toggleState);
+                                });
+                            }
+
+                            // テキスト入力の変更を監視してローカルストレージに保存
+                            document.getElementById('goal-input').addEventListener('input', function() {
+                                const goalText = this.value;
+                                localStorage.setItem('goal', goalText);
+                            });
+                        });
+                    </script>
+                </body>
+
+                </html>
+
+
             
         </div>
         <!DOCTYPE html>
@@ -353,13 +416,14 @@
 <body>
     <div class="button-container">
         <form id="resultForm" action="/submit" method="POST">
-            <button type="submit" id="submitButton">今日の結果を送信する</button>
+            <button type="submit" id="saveButton">今日の結果を送信する</button>
         </form>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const submitButton = document.getElementById('submitButton');
+            
+            const submitButton = document.getElementById('saveButton');
             const form = document.getElementById('resultForm');
             const storageKey = 'dailySubmission';
 
@@ -393,50 +457,57 @@
     </script>
     <script>
             document.addEventListener('DOMContentLoaded', () => {
-        const nutrientKeys = ['carbohydrate-night-image', 'protein-night-image', 'vegetable-night-image'
-            ,'carbohydrate-image', 'protein-image', 'vegetable-image','carbohydrate-lunch-image', 'protein-lunch-image', 'vegetable-lunch-image'
-        ];
-        const allSaved = nutrientKeys.every(key => localStorage.getItem(key));
+                document.getElementById('saveButton').addEventListener('click', () => {
+                    const nutrientKeys = ['carbohydrate-night-image', 'protein-night-image', 'vegetable-night-image'
+                        ,'carbohydrate-image', 'protein-image', 'vegetable-image','carbohydrate-lunch-image', 'protein-lunch-image', 'vegetable-lunch-image'
+                    ];
+                    
 
-        if (allSaved) {
-            // 三大栄養素がすべて保存されている場合、サーバーに保存リクエストを送信
-            fetch('/save-item', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-                body: JSON.stringify({
-                    name: 'チョコレート', // アイテム名
-                    description: '甘いおやつ', // 説明
-                    owner_id: 1, // 所有者ID (適切な値を設定)
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('保存成功:', data);
-            })
-            .catch(error => {
-                console.error('保存エラー:', error);
-            });
-        } else {
-            // 保存されていない場合、ゲージテーブルをリセット
-            fetch('/reset-gauge', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('ゲージリセット成功:', data);
-            })
-            .catch(error => {
-                console.error('ゲージリセットエラー:', error);
-            });
-        }
+                    const allSaved = nutrientKeys.every(key => localStorage.getItem(key));
+                    const goalToggleState = localStorage.getItem('goal_toggle_state');
+                    
+
+                    if (allSaved && goalToggleState === 'true') {
+                        // 三大栄養素がすべて保存されている場合、サーバーに保存リクエストを送信
+                        fetch('/save-item', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            },
+                            body: JSON.stringify({
+                                name: 'チョコレート', // アイテム名
+                                description: '甘いおやつ', // 説明
+                                owner_id: 1, // 所有者ID (適切な値を設定)
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('保存成功:', data);
+                        })
+                        .catch(error => {
+                            console.error('保存エラー:', error);
+                        });
+                    } else {
+                        // 保存されていない場合、ゲージテーブルをリセット
+                        fetch('/reset-gauge', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('ゲージリセット成功:', data);
+                        })
+                        .catch(error => {
+                            console.error('ゲージリセットエラー:', error);
+                        });
+                    }
+                });
     });
+    
 
     </script>
 
