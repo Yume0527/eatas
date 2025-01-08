@@ -53,4 +53,7 @@ Route::get('/items/give', [ItemController::class, 'showGiveItemForm'])->name('it
 Route::get('/items', [ItemController::class, 'index'])->name('items');
 Route::get('/items/detail', [ItemController::class, 'showItem'])->name('items.detail');
 
+Route::post('/add-gauge', [GaugeController::class, 'store'])->name('gauge.store');
+// これをあげるボタンを押すとゲージテーブルに1のデータを追加
+
 require __DIR__.'/auth.php';

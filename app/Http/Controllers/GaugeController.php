@@ -7,6 +7,19 @@ use App\Models\Gauge;
 
 class GaugeController extends Controller
 {
+    public function store(Request $request)
+    {
+        // データを保存する
+        Gauge::create([
+            'count' => 1,
+            'created_at' => null,
+            'updated_at' => null,
+        ]);
+
+        // index.blade.php にリダイレクト
+        return redirect()->route('index');
+    }
+    
     // ゲージを削除するメソッド
     public function destroy()
     {
