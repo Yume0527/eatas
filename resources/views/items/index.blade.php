@@ -59,7 +59,7 @@
     <div class="content">
         <p>チートデイまであと</p>
         <div class="progress-bar">
-            <div class="progress"></div>
+            <div class="progress" ></div>
         </div>
 
         <!-- キャラクター画像を囲むコンテナ -->
@@ -70,12 +70,17 @@
             </div>
             
             <img src="{{ asset('images/Character.png') }}" alt="キャラクター" width="150">
-            @if($items->isEmpty())
-                <p>渡せるアイテムがありません。</p>
-                <button class="btn" disabled>アイテムをあげる</button>
-            @else
-                <button class="btn" onclick="location.href='{{ route('items.give') }}'">アイテムをあげる</button>
-            @endif
+            
+           @if($items->isEmpty())
+    <p>渡せるアイテムがありません。</p>
+    <button class="btn" disabled>アイテムをあげる</button>
+@else
+    <button class="btn" onclick="location.href='{{ route('items.give') }}'">アイテムをあげる</button>
+@endif
+
+
+
+
     <div class="todo-list">
         <h3>Todoリスト</h3>
         <ul id="todo-items">
@@ -142,6 +147,8 @@
     <div class="footer">
        
         <button onclick="navigateTo('/record/input')">食事入力</button>
+
+        <button onclick="navigateTo('/items/collect')">アイテム一覧</button>
     </div>
      <script>
         // ここにJavaScriptを記述

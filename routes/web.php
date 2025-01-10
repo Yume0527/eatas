@@ -25,10 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // アイテムをあげるフォーム表示
-    Route::get('/item', [ItemController::class, 'showGiveItemForm'])->name('item.show');
-
+    
     // アイテムをあげる処理
-    Route::post('/item', [ItemController::class, 'giveItem'])->name('item.give');
 });
 
 
@@ -51,9 +49,23 @@ Route::get('/', [ItemController::class, 'giveItem'])->name('giveItem');
 Route::post('/items/give', [ItemController::class, 'giveItem'])->name('items.give');
 Route::get('/items/give', [ItemController::class, 'showGiveItemForm'])->name('items.give.form');
 Route::get('/items', [ItemController::class, 'index'])->name('items');
-Route::get('/items/detail', [ItemController::class, 'showItem'])->name('items.detail');
 
 Route::post('/add-gauge', [GaugeController::class, 'store'])->name('gauge.store');
 // これをあげるボタンを押すとゲージテーブルに1のデータを追加
+
+Route::post('/items/collect', [ItemController::class, 'collect'])->name('items.collect');
+// アイテムリスト表示
+Route::get('/items', [ItemController::class, 'index'])->name('items.index')->middleware('auth');
+
+// アイテム詳細ページ
+Route::get('/items/detail', [ItemController::class, 'showItem'])->name('items.detail');
+
+// アイテムをあげるフォーム表示
+Route::get('/item', [ItemController::class, 'showGiveItemForm'])->name('item.show');
+
+// アイテムをあげる処理
+Route::post('/item', [ItemController::class, 'giveItem'])->name('item.give');
+
+
 
 require __DIR__.'/auth.php';

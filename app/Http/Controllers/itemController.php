@@ -62,7 +62,8 @@ class itemController extends Controller
 
     // アイテムをあげる処理
    
-    public function giveItem(Request $request)
+    // ゲージの増加ロジックを更新
+public function giveItem(Request $request)
 {
     // フォームから送られてきたデータを検証
     $request->validate([
@@ -85,17 +86,29 @@ class itemController extends Controller
         return redirect()->back()->with('error', 'キャラクターが見つかりません。');
     }
 
-    // キャラクターのゲージを増加
-    $character->gauge += 10; // ゲージ増加量は変更可能
+    // ゲージを増加（最大値を超えないようにする）
+    $newGauge = $character->gauge + 10;
+    $character->gauge = min($newGauge, $character->gauge_max);
+
+    // キャラクターのゲージ状態を更新
+    if ($character->gauge == $character->gauge_max) {
+        $character->status = 'max'; // ゲージが最大値になった場合
+    } else {
+        $character->status = 'active'; // 通常の状態
+    }
+
+    // キャラクターのゲージ更新
+
     $character->save();
 
     // アイテムの所有者を変更
-    $item->owner_id = auth()->id(); // 現在のユーザーに所有権を戻す（必要に応じて変更）
+    $item->owner_id = auth()->id(); // 現在のユーザーに所有権を戻す
     $item->save();
 
     // アイテムを渡した後、成功メッセージをセッションに格納
     return redirect()->route('index')->with('success', 'アイテムを渡しました！');
 }
+
 
 
 

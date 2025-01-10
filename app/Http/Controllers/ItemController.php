@@ -29,26 +29,19 @@ class ItemController extends Controller
 }
 
     public function index()
-    {
-         $items = \App\Models\Item::where('owner_id', auth()->id())->get();
-        // アイテムをデータベースから取得
-        $users = \App\Models\User::all();
+{
+    // ユーザーが所有しているアイテムを取得
+    $items = \App\Models\Item::where('owner_id', auth()->id())->get();
 
-        // アイテム一覧をビューに渡す
-          return view('items.index', compact('items','users'));
-    }
+    return view('items.index', compact('items')); // アイテムリストをビューに渡す
+}
+
     // アイテム表示メソッド
     public function showItem()
     {
-        // 例としてIDが1のアイテムを取得
-       $item = Item::first(); // 例として最初のアイテムを取得
-        $items = Item::all();  // 全アイテムを取得
-
-        if (!$item) {
-            return view('items.detail', ['item' => null, 'error' => 'アイテムが見つかりませんでした。']);
-        }
-
-        return view('items.detail', ['item' => $item, 'items' => $items]);
+       $items = Item::all(); // 例えばItemモデルからアイテムを取得
+    return view('items.collections', compact('items')); 
+    
     }
 
     // アイテムをあげる画面表示
@@ -119,6 +112,27 @@ class ItemController extends Controller
     return back()->with('error', '問題が発生しました。');
 
     }
+
+    public function collect()
+{
+    // collection テーブルからランダムで1つアイテムを取得
+    $randomItem = \App\Models\Collection::inRandomOrder()->first();
+
+    // アイテムリストを取得（例：ユーザーの所有しているアイテム）
+    $items = \App\Models\Item::where('user_id', auth()->id())->get();
+
+    // items テーブルに新しいアイテムを保存
+    \App\Models\Item::create([
+        'user_id' => auth()->id(),
+        'collection_id' => $randomItem->id,
+        'name' => $randomItem->name,  // ここで collection の name を item の name に設定
+    ]);
+
+    // アイテムが追加された後、アイテムリストと成功メッセージをビューに渡す
+    return redirect()->route('items.index')->with(['items' => $items, 'success' => $randomItem->name . ' を取得しました！']);
+}
+
+
 
 }
 ?>
