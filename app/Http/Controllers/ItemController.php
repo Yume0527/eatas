@@ -29,26 +29,19 @@ class ItemController extends Controller
 }
 
     public function index()
-    {
-         $items = \App\Models\Item::where('owner_id', auth()->id())->get();
-        // アイテムをデータベースから取得
-        $users = \App\Models\User::all();
+{
+    // ユーザーが所有しているアイテムを取得
+    $items = \App\Models\Item::where('owner_id', auth()->id())->get();
 
-        // アイテム一覧をビューに渡す
-          return view('items.index', compact('items','users'));
-    }
+    return view('items.index', compact('items')); // アイテムリストをビューに渡す
+}
+
     // アイテム表示メソッド
     public function showItem()
     {
-        // 例としてIDが1のアイテムを取得
-       $item = Item::first(); // 例として最初のアイテムを取得
-        $items = Item::all();  // 全アイテムを取得
-
-        if (!$item) {
-            return view('items.detail', ['item' => null, 'error' => 'アイテムが見つかりませんでした。']);
-        }
-
-        return view('items.detail', ['item' => $item, 'items' => $items]);
+       $items = Item::all(); // 例えばItemモデルからアイテムを取得
+    return view('items.collections', compact('items')); 
+    
     }
 
     // アイテムをあげる画面表示
@@ -119,6 +112,55 @@ class ItemController extends Controller
     return back()->with('error', '問題が発生しました。');
 
     }
+
+   public function collect(Request $request)
+{
+    if ($request->isMethod('get')) {
+        // GETリクエストの処理
+        $collections = \App\Models\Collection::all(); // コレクションデータを取得
+        $ownedItems = \App\Models\Item::where('owner_id', auth()->id())->get(); // 所有しているアイテムを取得
+
+        // 所有しているアイテムのIDを配列として取得
+        $ownedItemIds = $ownedItems->pluck('collection_id')->toArray();
+
+        // ランダムにコレクションアイテムを取得
+        $randomItem = \App\Models\Collection::inRandomOrder()->first(); 
+
+        if ($randomItem) {
+            // ビューに渡すデータをセット
+            return view('items.collect', compact('randomItem', 'collections', 'ownedItemIds'));
+        } else {
+            // ランダムアイテムが取得できなかった場合
+            return redirect()->back()->with('error', '収集できるアイテムがありません。');
+        }
+    }
+
+    if ($request->isMethod('post')) {
+        // POSTリクエストの処理
+        // ランダムにアイテムを取得
+        $randomItem = \App\Models\Collection::inRandomOrder()->first();
+
+        if (!$randomItem) {
+            return redirect()->back()->with('error', '収集できるアイテムがありません。');
+        }
+
+        // アイテムを収集
+        \App\Models\Item::create([
+            'owner_id' => auth()->id(),
+            'collection_id' => $randomItem->id,
+            'name' => $randomItem->name,
+        ]);
+
+        // アイテムを収集した後、成功メッセージを表示してリダイレクト
+        return redirect()->route('items.index')->with('success', $randomItem->name . ' を収集しました！');
+    }
+}
+
+
+
+
+
+
 
 }
 ?>

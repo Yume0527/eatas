@@ -59,7 +59,7 @@
     <div class="content">
         <p>チートデイまであと</p>
         <div class="progress-bar">
-            <div class="progress"></div>
+            <div class="progress" ></div>
         </div>
 
         <!-- キャラクター画像を囲むコンテナ -->
@@ -70,13 +70,25 @@
             </div>
             
             <img src="{{ asset('images/Character.png') }}" alt="キャラクター" width="150">
-            @if($items->isEmpty())
-                <p>渡せるアイテムがありません。</p>
-                <button class="btn" disabled>アイテムをあげる</button>
-            @else
-                <button class="btn" onclick="location.href='{{ route('items.give') }}'">アイテムをあげる</button>
-            @endif
+            
+           @if($items->isEmpty())
+    <p>渡せるアイテムがありません。</p>
+    <button class="btn" disabled>アイテムをあげる</button>
+@else
+    <button class="btn" onclick="location.href='{{ route('items.give') }}'">アイテムをあげる</button>
+@endif
 
+
+
+
+    <div class="todo-list">
+        <h3>Todoリスト</h3>
+        <ul id="todo-items">
+
+        </ul>
+        <input type="text" id="new-todo" placeholder="新しいタスクを入力" />
+        <button id="add-todo">追加</button>
+    </div>
            
         </div>
 
@@ -89,6 +101,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>フッターデザイン</title>
     <style>
+         .todo-list {
+            position: absolute;
+            top: 50%;
+            left: 30;
+            transform: translate(-100%, 50%);
+            background-color: #fff9e6;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 250px;
+        }
         .footer {
             position: fixed;
             bottom: 0;
@@ -124,7 +147,40 @@
     <div class="footer">
        
         <button onclick="navigateTo('/record/input')">食事入力</button>
+
+        <button onclick="navigateTo('/items/collect')">アイテム一覧</button>
     </div>
+     <script>
+        // ここにJavaScriptを記述
+        document.getElementById('add-todo').addEventListener('click', function() {
+            const todoInput = document.getElementById('new-todo');
+            const todoText = todoInput.value.trim();
+
+            if (todoText) {
+                const todoList = document.getElementById('todo-items');
+                const newTodo = document.createElement('li');
+                newTodo.textContent = todoText;
+
+                // 削除ボタンを作成
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '削除';
+                deleteButton.style.marginLeft = '10px';
+                deleteButton.style.background = '#ff6b6b';
+                deleteButton.style.border = 'none';
+                deleteButton.style.borderRadius = '5px';
+                deleteButton.style.color = 'white';
+                deleteButton.style.cursor = 'pointer';
+
+                deleteButton.addEventListener('click', function() {
+                    todoList.removeChild(newTodo);
+                });
+
+                newTodo.appendChild(deleteButton);
+                todoList.appendChild(newTodo);
+                todoInput.value = ''; // 入力フィールドをリセット
+            }
+        });
+    </script>
 </body>
 </html>
 
