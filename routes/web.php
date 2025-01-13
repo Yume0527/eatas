@@ -65,6 +65,7 @@ Route::get('/item', [ItemController::class, 'showGiveItemForm'])->name('item.sho
 
 // アイテムをあげる処理
 Route::post('/item', [ItemController::class, 'giveItem'])->name('item.give');
+Route::get('/items/collect', [ItemController::class, 'collect']);
 
 
 

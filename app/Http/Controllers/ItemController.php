@@ -113,24 +113,52 @@ class ItemController extends Controller
 
     }
 
-    public function collect()
+   public function collect(Request $request)
 {
-    // collection テーブルからランダムで1つアイテムを取得
-    $randomItem = \App\Models\Collection::inRandomOrder()->first();
+    if ($request->isMethod('get')) {
+        // GETリクエストの処理
+        $collections = \App\Models\Collection::all(); // コレクションデータを取得
+        $ownedItems = \App\Models\Item::where('owner_id', auth()->id())->get(); // 所有しているアイテムを取得
 
-    // アイテムリストを取得（例：ユーザーの所有しているアイテム）
-    $items = \App\Models\Item::where('user_id', auth()->id())->get();
+        // 所有しているアイテムのIDを配列として取得
+        $ownedItemIds = $ownedItems->pluck('collection_id')->toArray();
 
-    // items テーブルに新しいアイテムを保存
-    \App\Models\Item::create([
-        'user_id' => auth()->id(),
-        'collection_id' => $randomItem->id,
-        'name' => $randomItem->name,  // ここで collection の name を item の name に設定
-    ]);
+        // ランダムにコレクションアイテムを取得
+        $randomItem = \App\Models\Collection::inRandomOrder()->first(); 
 
-    // アイテムが追加された後、アイテムリストと成功メッセージをビューに渡す
-    return redirect()->route('items.index')->with(['items' => $items, 'success' => $randomItem->name . ' を取得しました！']);
+        if ($randomItem) {
+            // ビューに渡すデータをセット
+            return view('items.collect', compact('randomItem', 'collections', 'ownedItemIds'));
+        } else {
+            // ランダムアイテムが取得できなかった場合
+            return redirect()->back()->with('error', '収集できるアイテムがありません。');
+        }
+    }
+
+    if ($request->isMethod('post')) {
+        // POSTリクエストの処理
+        // ランダムにアイテムを取得
+        $randomItem = \App\Models\Collection::inRandomOrder()->first();
+
+        if (!$randomItem) {
+            return redirect()->back()->with('error', '収集できるアイテムがありません。');
+        }
+
+        // アイテムを収集
+        \App\Models\Item::create([
+            'owner_id' => auth()->id(),
+            'collection_id' => $randomItem->id,
+            'name' => $randomItem->name,
+        ]);
+
+        // アイテムを収集した後、成功メッセージを表示してリダイレクト
+        return redirect()->route('items.index')->with('success', $randomItem->name . ' を収集しました！');
+    }
 }
+
+
+
+
 
 
 
