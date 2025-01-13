@@ -465,6 +465,22 @@
 
                     const allSaved = nutrientKeys.every(key => localStorage.getItem(key));
                     const goalToggleState = localStorage.getItem('goal_toggle_state');
+                    const randomName = (() => {
+                        const names = [
+                            'チョコレート',
+                            'アイス',
+                            'クッキー',
+                            'ケーキ',
+                            'キャンディ',
+                            'ドーナツ',
+                            'プリン',
+                            'タルト',
+                            'マカロン',
+                            'パフェ'
+                        ];
+                        return names[Math.floor(Math.random() * names.length)];
+                    })();
+
                     
 
                     if (allSaved && goalToggleState === 'true') {
@@ -476,8 +492,8 @@
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                             },
                             body: JSON.stringify({
-                                name: 'チョコレート', // アイテム名
-                                description: '甘いおやつ', // 説明
+                                name: randomName, // アイテム名
+                                description: '1', // 説明
                                 owner_id: 1, // 所有者ID (適切な値を設定)
                             }),
                         })
