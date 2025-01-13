@@ -9,6 +9,8 @@ use App\Http\Controllers\MealController;
 use App\Http\Controllers\GaugeController;
 
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\CookDataController;
+
 
 
 Route::get('/', function () {
@@ -66,6 +68,9 @@ Route::get('/item', [ItemController::class, 'showGiveItemForm'])->name('item.sho
 // アイテムをあげる処理
 Route::post('/item', [ItemController::class, 'giveItem'])->name('item.give');
 Route::get('/items/collect', [ItemController::class, 'collect']);
+
+Route::post('/save-cook-data', [CookDataController::class, 'saveCookData']);
+// 料理の画像が保存される処理
 
 
 
