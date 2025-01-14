@@ -44,7 +44,7 @@ Route::delete('/reset-gauge', [GaugeController::class, 'destroy']);
 Route::post('/recipes', [RecipeController::class, 'store'])->name('recipe.store');
 
 
-Route::get('/index', [ItemController::class, 'index'])->name('index');
+Route::get('/items/index', [ItemController::class, 'index'])->name('index');
 Route::get('/items/give', [ItemController::class, 'give'])->name('items.give');
 Route::get('/', [ItemController::class, 'giveItem'])->name('giveItem');
 

@@ -6,6 +6,7 @@ use App\Models\Character;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Gauge;
 
 
 class ItemController extends Controller
@@ -33,7 +34,13 @@ class ItemController extends Controller
     // ユーザーが所有しているアイテムを取得
     $items = \App\Models\Item::where('owner_id', auth()->id())->get();
 
-    return view('items.index', compact('items')); // アイテムリストをビューに渡す
+        // gaugeテーブルのデータを取得
+        $gaugeCount = Gauge::count(); // カラム数をカウント
+
+        // 取得したカラム数に基づいて表示位置を計算
+        $position = $gaugeCount; // 任意の計算ロジックを追加（例えば、位置をカウントに基づいて決める）
+
+        return view('items.index', compact('position', 'items'));
 }
 
     // アイテム表示メソッド
