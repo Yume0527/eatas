@@ -325,7 +325,7 @@
             <body>
 
                 <div class="footer">
-                    <button onclick="navigateTo('/index')">ホームに戻る</button>
+                    <button onclick="navigateTo('/items/index')">ホームに戻る</button>
                 </div>
             </body>
     
