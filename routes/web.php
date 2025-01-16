@@ -44,7 +44,7 @@ Route::delete('/reset-gauge', [GaugeController::class, 'destroy']);
 Route::post('/recipes', [RecipeController::class, 'store'])->name('recipe.store');
 
 
-Route::get('/index', [ItemController::class, 'index'])->name('index');
+Route::get('/items/index', [ItemController::class, 'index'])->name('index');
 Route::get('/items/give', [ItemController::class, 'give'])->name('items.give');
 Route::get('/', [ItemController::class, 'giveItem'])->name('giveItem');
 
@@ -65,11 +65,9 @@ Route::get('/items/detail', [ItemController::class, 'showItem'])->name('items.de
 // アイテムをあげるフォーム表示
 Route::get('/item', [ItemController::class, 'showGiveItemForm'])->name('item.show');
 
-Route::get('/items/collect', [ItemController::class, 'showCollectPage'])->name('items.collect');
-Route::post('/items/collect', [ItemController::class, 'collectItem'])->name('items.collect.store');
-
 // アイテムをあげる処理
-
+Route::post('/item', [ItemController::class, 'giveItem'])->name('item.give');
+Route::get('/items/collect', [ItemController::class, 'collect']);
 
 Route::post('/save-cook-data', [CookDataController::class, 'saveCookData']);
 // 料理の画像が保存される処理
