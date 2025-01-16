@@ -72,6 +72,7 @@ Route::get('/items/collect', [ItemController::class, 'collect']);
 Route::post('/save-cook-data', [CookDataController::class, 'saveCookData']);
 // 料理の画像が保存される処理
 
+Route::get('/update-collection-id', [ItemController::class, 'updateCollectionId']);
 
 
 require __DIR__.'/auth.php';
