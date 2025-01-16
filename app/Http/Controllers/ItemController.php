@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Gauge;
+use App\Models\Comment;
 
 
 class ItemController extends Controller
@@ -40,7 +41,37 @@ class ItemController extends Controller
         // 取得したカラム数に基づいて表示位置を計算
         $position = $gaugeCount; // 任意の計算ロジックを追加（例えば、位置をカウントに基づいて決める）
 
-        return view('items.index', compact('position', 'items'));
+        $tips = [
+            "朝ごはんはしっかり食べてね！体が元気に動けるようになるんだ！",
+            "お水を飲むの、忘れてない？ご飯の前に一杯飲むと食べ過ぎないで済むらしいよ！",
+            "サラダは最初に食べるといいんだって！血糖値が上がりにくくなるんだ！",
+            "筋肉を育てるには、タンパク質が大事だよ！お魚とかお豆さん、いっぱい食べよう！",
+            "加工食品ばっかり食べると、体がびっくりしちゃうかも！自然のものを選ぶといいよ！",
+            "ごはんはバランスが大事！主食・主菜・副菜を仲良くそろえて食べるといいよ！",
+            "野菜は1日350gが目標だ！カラフルなお野菜をたくさん食べて、体も心もピカピカにしよう！",
+            "モグモグ、たくさん噛むと満腹感が出やすいよ～。一口30回、やってみて！",
+            "間食は食べすぎ注意だよ～！ナッツやヨーグルトがオススメ！",
+            "炭水化物を全抜きしちゃダメ！エネルギー切れでヘロヘロになるよ！",
+            "塩分は1日6gまでが目安！薄味でもおだしや香辛料を使えば美味しく食べられるよ！",
+            "腸内の仲良し菌を増やすには、発酵食品がオススメだよ！ヨーグルトとか納豆を食べよう！",
+            "寝る前にごはんを食べるとお腹がびっくりするよ！3時間前までに済ませて～！",
+            "ストレスを溜めないのが一番！リラックスすると食べすぎも防げるよ～！",
+            "体重は毎日測るより、長～い目で見る方がいいよ！1週間とか1か月単位で考えようね～！"
+        ];
+
+        foreach ($tips as $tip) {
+            // 同じデータが存在しない場合のみ挿入
+            if (!Comment::where('text', $tip)->exists()) {
+                Comment::create(['text' => $tip]);
+            }
+        }
+
+        // comment テーブルからランダムに1件取得
+        $randomComment = \App\Models\Comment::inRandomOrder()->first();
+
+        return view('items.index',
+            compact('position', 'items', 'randomComment')
+        );
 }
 
     // アイテム表示メソッド

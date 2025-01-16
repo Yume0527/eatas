@@ -30,7 +30,11 @@
                     <div class="character-container target-item">
                         <img id="yarukichi" src="{{ asset('images/Yarukichi_normal.png') }}" alt="Yarukichi Normal" class="overlay" />
                         <div class="speech-bubble">
-                            こんにちは！！
+                            @if($randomComment)
+                            <p>{{ $randomComment->text }}</p>
+                            @else
+                            <p>コメントがありません。</p>
+                            @endif
                         </div>
                     </div>
                     @endif
