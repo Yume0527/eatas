@@ -472,57 +472,21 @@
     <script>
             document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('saveButton').addEventListener('click', () => {
+                    const today = new Date();
+                    // 年・月・日・曜日を取得
+                    const year = today.getFullYear();
+                    const month = today.getMonth() + 1;
+                    const date = today.getDate();
+                    const formattedDate = `${year}-${month}-${date}`;
                     const nutrientKeys = ['carbohydrate-night-image', 'protein-night-image', 'vegetable-night-image'
-                        ,'carbohydrate-image', 'protein-image', 'vegetable-image','carbohydrate-lunch-image', 'protein-lunch-image', 'vegetable-lunch-image'
+                        ,'carbohydrate-morning-image', 'protein-morning-image', 'vegetable-morning-image','carbohydrate-lunch-image', 'protein-lunch-image', 'vegetable-lunch-image'
                     ];
-                    const cookfilekeys = [
-                        'carbohydrate-filename',
-                        'protein-filename',
-                        'vegetable-filename',
-                        'carbohydrate-lunch-filename',
-                        'protein-lunch-filename',
-                        'vegetable-lunch-filename',
-                        'carbohydrate-night-filename',
-                        'protein-night-filename',
-                        'vegetable-night-filename'
-                    ];
-                   
+                    // 日付をキーに追加した新しい配列を作成
+                    const nutrientKeysWithDate = nutrientKeys.map(key => `${key}-${formattedDate}`);
 
-                    // cookfileValues オブジェクトを初期化
-                    const cookfileValues = [];
+                    console.log(nutrientKeysWithDate);
 
-                    // 各キーに対して、ローカルストレージから値を取得して格納
-                    cookfilekeys.forEach(key => {
-                        // ローカルストレージから値を取得
-                        const value = localStorage.getItem(key);
-
-                        // ローカルストレージに値があれば、値を格納。なければnullを格納
-                        cookfileValues.push({
-                            name: key,  // カテゴリ名（例: 'carbohydrate-filename'）
-                            image: value ? value : null  // 画像のパス（nullの場合もある）
-                        });
-                    });
-
-                    // フロントエンドで送信するデータ
-                    const data = {
-                        cookfiles: cookfileValues  // 各カテゴリ名と画像のペアを送信
-                    };
-
-                    // fetchでデータを送信
-                    fetch('/save-cook-data', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // CSRFトークンを設定
-                        },
-                        body: JSON.stringify(data),
-                    })
-                    .then(response => response.json())
-                    .then(data => console.log('Data saved:', data))
-                    .catch(error => console.error('Error:', error));
-
-
-                    const allSaved = nutrientKeys.every(key => localStorage.getItem(key));
+                    const allSaved = nutrientKeysWithDate.every(key => localStorage.getItem(key));
                     const goalToggleState = localStorage.getItem('goal_toggle_state');
                     const randomName = (() => {
                         const names = [
