@@ -48,7 +48,6 @@
 <div class="items-grid">
     @foreach ($collections as $collection)
         <div class="item-box">
-            
             <p>{{ $collection->name }}</p>
             @if (in_array($collection->id, $ownedItemIds))
                 <p style="color: green;">〇</p>
@@ -58,6 +57,7 @@
         </div>
     @endforeach
 </div>
+
 
 
      <!DOCTYPE html>
