@@ -48,18 +48,19 @@
 <div class="items-grid">
     @foreach ($collections as $collection)
         <div class="item-box">
-            <p>{{ $collection->name }}</p>
-            @if (in_array($collection->id, $ownedItemIds))
-                <p style="color: green;">〇</p>
-            @else
-                <p style="color: red;">×</p>
+            @if (in_array($collection->id, $ownedItemIds)) <!-- 既に収集したアイテム -->
+                <img src="{{ asset('images/' . $collection->image) }}" alt="{{ $collection->name }}">
+                <p>{{ $collection->name }}</p>
+            @else <!-- まだ収集していないアイテム -->
+                <img src="{{ asset('images/question_mark.png') }}" alt="未取得">
+                <p>？？？</p>
+                <form action="{{ url('/items/collect') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="collect-button">収集</button>
+                </form>
             @endif
         </div>
     @endforeach
-</div>
-
-
-
      <!DOCTYPE html>
             <html lang="ja">
             <head>
