@@ -11,6 +11,8 @@ use App\Http\Controllers\GaugeController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CookDataController;
 
+use App\Models\Item;
+
 
 
 Route::get('/', function () {
@@ -76,6 +78,11 @@ Route::get('/record/cook', [CookDataController::class, 'cookView']);
 // 過去の食事一覧のViewに遷移する処理
 Route::get('/record/cook', [CookDataController::class, 'cookViewImg'])->name('record.cook');
 // 過去の食事の画像を取ってくる処理
+
+Route::get('/get-item', function () {
+    $item = Item::where('description', 1)->first();
+    return response()->json($item);
+});//アイテムのdescriptionが1のアイテム名を取ってくる
 
 
 require __DIR__.'/auth.php';
