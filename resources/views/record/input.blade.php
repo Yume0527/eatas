@@ -324,8 +324,11 @@
             </head>
             <body>
                 <div class="footer">
-                    <button onclick="navigateTo('/index')">ホームに戻る</button>
+
+                    <button onclick="navigateTo('/items/index')">ホームに戻る</button>
                     <button onclick="navigateTo('/record/cook')">過去の食事記録</button>
+
+
                 </div>
             </body>
     
