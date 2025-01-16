@@ -18,25 +18,33 @@ class CookDataController extends Controller
      */
     public function saveCookData(Request $request)
     {
-        $file_path = null;
-        $full_path = null;
         $user = Auth::user(); 
-        // フロントエンドから送信されたデータを取得
         $cookfiles = $request->input('cookfiles'); // cookfiles は配列として送信される
-        $file = $cookfiles['image'];
-        $file_path = "file/" . $user->id . "/" . time() . $file->getClientOriginalName();
-        $full_path = $file->storeAs("/public", $file_path);
 
-        $full_path = storage_path('app/public/files/' . $user->id);
-        chmod($full_path, 0775);
-
-        $file_size = filesize(storage_path("app/public/" . $file_path));
-
-        // 受け取ったデータを保存
         foreach ($cookfiles as $cookfile) {
+            // 画像データが存在する場合のみ処理
+            if (isset($cookfile['image']) && $cookfile['image'] !== null) {
+                // 画像データを処理
+                $file = $request->file('cookfiles.' . array_search($cookfile, $cookfiles) . '.image'); // ファイルをリクエストから取得
+                $full_path = $request->input('name');
+                // $full_path = $file->storeAs("public", $file_path);
+
+                // 画像ファイルのフルパス
+                // $storage_path = storage_path('app/public/' . $file_path);
+
+                // ファイルパーミッションを設定
+                // chmod($storage_path, 0775);
+
+                // 画像サイズを取得
+                // $file_size = filesize($storage_path);
+            } else {
+                $full_path = null; // 画像がない場合は null を設定
+            }
+
+            // データを保存
             Cook::create([
-                'name' => $cookfile['name'],  // カテゴリ名（例: 'carbohydrate-filename'）
-                'image' => $file,  // 画像のパス（nullの場合もある）
+                'name' => $cookfile['name'], // カテゴリ名
+                'image' => $full_path,      // 画像のパス（または null）
             ]);
         }
 
