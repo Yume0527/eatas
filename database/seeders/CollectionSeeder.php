@@ -15,15 +15,15 @@ class CollectionSeeder extends Seeder
     {
          DB::table('collections')->insert([
             ['name' => 'チョコレート', 'image' => '/images/chocolate.png'],
-            ['name' => 'ポテトチップス', 'image' => '/images/potato_chips.png'],
+            ['name' => 'アイス', 'image' => '/images/aisu.png'],
+            ['name' => 'クッキー', 'image' => '/images/cookie.png'],
+            ['name' => 'ケーキ', 'image' => '/images/cake.png'],
             ['name' => 'ドーナツ', 'image' => '/images/donuts.png'],
-            ['name' => 'ホットケーキ', 'image' => '/images/pancakes.png'],
-            ['name' => 'ロールケーキ', 'image' => '/images/roll_cake.png'],
             ['name' => 'キャンディ', 'image' => '/images/candy.png'],
-            ['name' => 'まんじゅう', 'image' => '/images/manju.png'],
-            ['name' => 'チーズケーキ', 'image' => '/images/cheesecake.png'],
-            ['name' => 'もみじ饅頭', 'image' => '/images/maple_cake.png'],
-            ['name' => 'みたらし団子', 'image' => '/images/dango.png'],
+            ['name' => 'プリン', 'image' => '/images/purin.png'],
+            ['name' => 'タルト', 'image' => '/images/taruto.png'],
+            ['name' => 'マカロン', 'image' => '/images/macalon.png'],
+            ['name' => 'パフェ', 'image' => '/images/pafe.png'],
         ]);
     }
 }

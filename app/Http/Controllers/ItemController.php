@@ -16,19 +16,20 @@ class ItemController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'name' => 'required|string|max:255', // 必須の名前
-        'description' => 'nullable|string', // 任意の説明
-        'owner_id' => 'required|integer', // 必須の所有者ID
+        'name' => 'required|string|max:255',
+        'collection_id' => 'required|integer', // 必須の整数型
+        'owner_id' => 'required|integer',
     ]);
 
     $item = new Item();
     $item->name = $request->input('name');
-    $item->description = $request->input('description');
+    $item->collection_id = $request->input('collection_id'); // リクエストから受け取ったcollection_idを保存
     $item->owner_id = $request->input('owner_id');
     $item->save();
 
     return response()->json(['message' => 'アイテムが保存されました', 'item' => $item], 201);
 }
+
 
     public function index()
 {
@@ -163,11 +164,10 @@ class ItemController extends Controller
     if ($request->isMethod('get')) {
         // GETリクエストの処理
         $collections = \App\Models\Collection::all(); // コレクションデータを取得
-        $ownedItems = \App\Models\Item::where('owner_id', auth()->id())->get(); // 所有しているアイテムを取得
-
-        // 所有しているアイテムのIDを配列として取得
+        $ownedItems = \App\Models\Item::where('owner_id', auth()->id())
+                ->whereNotNull('collection_id')  // collection_idがNULLでないアイテムだけ取得
+                ->get();
         $ownedItemIds = $ownedItems->pluck('collection_id')->toArray();
-
         // ランダムにコレクションアイテムを取得
         $randomItem = \App\Models\Collection::inRandomOrder()->first(); 
 
@@ -201,6 +201,19 @@ class ItemController extends Controller
     }
 }
 
+public function updateCollectionId()
+{
+    // descriptionが'1'の行を取得
+    $items = Item::where('description', 1)->get();
+
+    // 各アイテムのcollection_idを更新
+    foreach ($items as $item) {
+        $item->collection_id = $item->description; // descriptionの値をcollection_idに設定
+        $item->save(); // 保存
+    }
+
+    return response()->json(['message' => 'Collection ID updated successfully']);
+}
 
 
 

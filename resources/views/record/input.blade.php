@@ -325,8 +325,10 @@
             <body>
                 <div class="footer">
 
+
                     <button onclick="navigateTo('/items/index')">ホームに戻る</button>
                     <button onclick="navigateTo('/record/cook')">過去の食事記録</button>
+
 
 
                 </div>
@@ -506,28 +508,53 @@
 
                     
 
-                    if (allSaved && goalToggleState === 'true') {
-                        // 三大栄養素がすべて保存されている場合、サーバーに保存リクエストを送信
-                        fetch('/save-item', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            },
-                            body: JSON.stringify({
-                                name: randomName, // アイテム名
-                                description: '1', // 説明
-                                owner_id: 1, // 所有者ID (適切な値を設定)
-                            }),
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log('保存成功:', data);
-                        })
-                        .catch(error => {
-                            console.error('保存エラー:', error);
-                        });
-                    } else {
+                   if (allSaved && goalToggleState === 'true') {
+    // アイテム名とcollection_idのマッピングを定義
+    const itemCollectionMap = {
+        'チョコレート': 1,
+        'アイス': 2,
+        'クッキー': 3,
+        'ケーキ': 4,
+        'ドーナツ': 5,
+        'キャンディ': 6,
+        'プリン': 7,
+        'タルト': 8,
+        'マカロン': 9,
+        'パフェ': 10
+    };
+
+    // ランダムなアイテム名を選択
+    const randomName = (() => {
+        const names = Object.keys(itemCollectionMap);
+        return names[Math.floor(Math.random() * names.length)];
+    })();
+
+    // 選択されたアイテム名に対応するcollection_idを取得
+    const collectionId = itemCollectionMap[randomName];
+
+    // サーバーに保存リクエストを送信
+    fetch('/save-item', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: JSON.stringify({
+            name: randomName, // アイテム名
+            collection_id: collectionId, // マッピングされたcollection_id
+            owner_id: 1, // 所有者ID (適切な値を設定)
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('保存成功:', data);
+    })
+    .catch(error => {
+        console.error('保存エラー:', error);
+    });
+}
+
+else {
                         // 保存されていない場合、ゲージテーブルをリセット
                         fetch('/reset-gauge', {
                             method: 'DELETE',

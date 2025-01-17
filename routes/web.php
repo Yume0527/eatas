@@ -74,6 +74,9 @@ Route::get('/items/collect', [ItemController::class, 'collect']);
 Route::post('/save-cook-data', [CookDataController::class, 'saveCookData']);
 // 料理の画像が保存される処理
 
+
+Route::get('/update-collection-id', [ItemController::class, 'updateCollectionId']);
+
 Route::get('/record/cook', [CookDataController::class, 'cookView']);
 // 過去の食事一覧のViewに遷移する処理
 Route::get('/record/cook', [CookDataController::class, 'cookViewImg'])->name('record.cook');
