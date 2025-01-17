@@ -79,18 +79,20 @@
 </head>
 <body>
     <div class="items-grid">
-        @foreach ($collections as $collection)
-            <div class="item-box">
-                <p>{{ $collection->name }}</p>
-                <img src="{{ asset('images/' . $collection['image']) }}" alt="{{ $collection['name'] }}" class="item-img">
-                @if (in_array($collection->id, $ownedItemIds))
-                    <p style="color: green;">〇</p>
-                @else
-                    <p style="color: red;">×</p>
-                @endif
-            </div>
-        @endforeach
-    </div>
+    @foreach ($collections as $collection)
+        <div class="item-box">
+            <p>{{ $collection->name }}</p>
+            <img src="{{ asset(ltrim($collection['image'], '/')) }}" alt="{{ $collection['name'] }}" class="item-img">
+
+            @if (in_array($collection->id, $ownedItemIds))
+                <p style="color: green;">〇</p>
+            @else
+                <p style="color: red;">×</p>
+            @endif
+        </div>
+    @endforeach
+</div>
+
 
     <div class="footer">
         <button onclick="navigateTo('/items')">ホームに戻る</button>

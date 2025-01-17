@@ -41,7 +41,20 @@ class ItemController extends Controller
         // 取得したカラム数に基づいて表示位置を計算
         $position = $gaugeCount; // 任意の計算ロジックを追加（例えば、位置をカウントに基づいて決める）
 
-        return view('items.index', compact('position', 'items'));
+         $collections = [
+        ['name' => 'チョコレート', 'image' => 'Chocolate.png'],
+        ['name' => 'アイス', 'image' => 'aisu.png'],
+        ['name' => 'クッキー', 'image' => 'cookie.png'],
+        ['name' => 'ケーキ', 'image' => 'cake.png'],
+        ['name' => 'ドーナツ', 'image' => 'donuts.png'],
+        ['name' => 'キャンディ', 'image' => 'candy.png'],
+        ['name' => 'プリン', 'image' => 'purin.png'],
+        ['name' => 'タルト', 'image' => 'taruto.png'],
+        ['name' => 'マカロン', 'image' => 'macalon.png'],
+        ['name' => 'パフェ', 'image' => 'pafe.png'],
+    ];
+
+        return view('items.index', compact('position', 'items', 'collections'));
 }
 
     // アイテム表示メソッド
