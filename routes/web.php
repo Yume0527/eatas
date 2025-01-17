@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Http\Controllers\ProfileController;
@@ -11,15 +12,13 @@ use App\Http\Controllers\GaugeController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CookDataController;
 
-
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/Home', function () {
+    return view('Home');
+})->middleware(['auth', 'verified'])->name('Home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -73,6 +72,13 @@ Route::post('/save-cook-data', [CookDataController::class, 'saveCookData']);
 // 料理の画像が保存される処理
 
 Route::get('/update-collection-id', [ItemController::class, 'updateCollectionId']);
+
+Route::get('/record/input', [ProfileController::class, 'input'])->name('record.input');
+// コントローラの部分は後で変更
+Route::get('/evaluation', [ProfileController::class, 'evaluation'])->name('evaluation');
+// コントローラの部分は後で変更
+Route::get('/', [ItemController::class, 'index'])->name('home');
+Route::get('/item', [ItemController::class, 'showItem'])->name('item.show');
 
 
 require __DIR__.'/auth.php';
