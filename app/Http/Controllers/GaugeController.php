@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Gauge;
+use App\Models\Item;
 
 class GaugeController extends Controller
 {
@@ -15,6 +16,7 @@ class GaugeController extends Controller
             'created_at' => null,
             'updated_at' => null,
         ]);
+        Item::query()->update(['description' => 2]);
 
         // index.blade.php にリダイレクト
         return redirect()->route('index');

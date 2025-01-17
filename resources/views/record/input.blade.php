@@ -57,22 +57,22 @@
                                 <h1>画像をアップロードしてください</h1>
                                 <div class="upload-container">
                                     <div class="upload-box">
-                                        <input type="file" name="carbohydrate" accept="image/*" onchange="handleFileUpload(this)">
+                                        <input type="file" name="carbohydrate-morning" accept="image/*" onchange="handleFileUpload(this)">
                                         <label>炭水化物</label>
-                                        <img id="carbohydrate-preview" alt="炭水化物プレビュー" style="display:none;">
-                                        <div class="file-name" id="carbohydrate-filename"></div>
+                                        <img id="carbohydrate-morning-preview" alt="炭水化物プレビュー" style="display:none;">
+                                        <div class="file-name" id="carbohydrate-morning-filename"></div>
                                     </div>
                                     <div class="upload-box">
-                                        <input type="file" name="protein" accept="image/*" onchange="handleFileUpload(this)">
+                                        <input type="file" name="protein-morning" accept="image/*" onchange="handleFileUpload(this)">
                                         <label>タンパク質</label>
-                                        <img id="protein-preview" alt="タンパク質プレビュー" style="display:none;">
-                                        <div class="file-name" id="protein-filename"></div>
+                                        <img id="protein-morning-preview" alt="タンパク質プレビュー" style="display:none;">
+                                        <div class="file-name" id="protein-morning-filename"></div>
                                     </div>
                                     <div class="upload-box">
-                                        <input type="file" name="vegetable" accept="image/*" onchange="handleFileUpload(this)">
+                                        <input type="file" name="vegetable-morning" accept="image/*" onchange="handleFileUpload(this)">
                                         <label>野菜</label>
-                                        <img id="vegetable-preview" alt="野菜プレビュー" style="display:none;">
-                                        <div class="file-name" id="vegetable-filename"></div>
+                                        <img id="vegetable-morning-preview" alt="野菜プレビュー" style="display:none;">
+                                        <div class="file-name" id="vegetable-morning-filename"></div>
                                     </div>
                                     
                                 </div>
@@ -323,37 +323,44 @@
                 </script>
             </head>
             <body>
-
                 <div class="footer">
+
+
                     <button onclick="navigateTo('/items/index')">ホームに戻る</button>
-                     <button onclick="navigateTo('/items/collect')">アイテム一覧</button>
+                    <button onclick="navigateTo('/record/cook')">過去の食事記録</button>
+
+
+
                 </div>
             </body>
     
     <script>
-            document.addEventListener('DOMContentLoaded', () => {
-        const fileInputs = document.querySelectorAll('input[type="file"]');
+            window.addEventListener('DOMContentLoaded', () => {
+    const inputs = document.querySelectorAll('.upload-box input[type="file"]');
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+    const formattedDate = `${year}-${month}-${date}`;
 
-        // ページロード時にローカルストレージから画像を復元
-        fileInputs.forEach(input => {
-            const previewId = input.name + '-preview';
-            const filenameId = input.name + '-filename';
-            const preview = document.getElementById(previewId);
-            const filenameDiv = document.getElementById(filenameId);
+    inputs.forEach(input => {
+        const previewId = `${input.name}-preview`;
+        const filenameId = `${input.name}-filename`;
+        const keyWithDate = `${input.name}-image-${formattedDate}`;
 
-            const storedImage = localStorage.getItem(input.name + '-image');
-            const storedFilename = localStorage.getItem(input.name + '-filename');
+        const preview = document.getElementById(previewId);
+        const filenameDiv = document.getElementById(filenameId);
 
-            if (storedImage && storedFilename) {
-                preview.src = storedImage;
-                preview.style.display = 'block';
-                filenameDiv.textContent = storedFilename;
-            }
+        const storedImage = localStorage.getItem(keyWithDate);
+        const storedFilename = localStorage.getItem(`${input.name}-filename`);
 
-            // ファイル選択時のイベントを設定
-            input.addEventListener('change', () => handleFileUpload(input));
-        });
+        if (storedImage && storedFilename && preview && filenameDiv) {
+            preview.src = storedImage;
+            preview.style.display = 'block';
+            filenameDiv.textContent = storedFilename;
+        }
     });
+});
     </script>
     <script>
             function handleFileUpload(input) {
@@ -371,10 +378,18 @@
 
                 // ファイル名を表示
                 filenameDiv.textContent = file.name;
+                const today = new Date();
+                // 年・月・日・曜日を取得
+                const year = today.getFullYear();
+                const month = today.getMonth() + 1;
+                const date = today.getDate();
+                const formattedDate = `${year}-${month}-${date}`;
 
+                // ファイル名に日付を追加
+                const keyWithDate = `${input.name}-image-${formattedDate}`;
                 // ローカルストレージに保存
-                localStorage.setItem(input.name + '-image', e.target.result);
-                localStorage.setItem(input.name + '-filename', file.name);
+                localStorage.setItem(keyWithDate, e.target.result);
+                localStorage.setItem(input.name + '-filename', file.name); // キーに日付を含めて保存
             };
             reader.readAsDataURL(file); // ファイルをデータURLとして読み込む
         }
@@ -459,56 +474,21 @@
     <script>
             document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('saveButton').addEventListener('click', () => {
+                    const today = new Date();
+                    // 年・月・日・曜日を取得
+                    const year = today.getFullYear();
+                    const month = today.getMonth() + 1;
+                    const date = today.getDate();
+                    const formattedDate = `${year}-${month}-${date}`;
                     const nutrientKeys = ['carbohydrate-night-image', 'protein-night-image', 'vegetable-night-image'
-                        ,'carbohydrate-image', 'protein-image', 'vegetable-image','carbohydrate-lunch-image', 'protein-lunch-image', 'vegetable-lunch-image'
+                        ,'carbohydrate-morning-image', 'protein-morning-image', 'vegetable-morning-image','carbohydrate-lunch-image', 'protein-lunch-image', 'vegetable-lunch-image'
                     ];
-                    const cookfilekeys = [
-                        'carbohydrate-filename',
-                        'protein-filename',
-                        'vegetable-filename',
-                        'carbohydrate-lunch-filename',
-                        'protein-lunch-filename',
-                        'vegetable-lunch-filename',
-                        'carbohydrate-night-filename',
-                        'protein-night-filename',
-                        'vegetable-night-filename'
-                    ];
+                    // 日付をキーに追加した新しい配列を作成
+                    const nutrientKeysWithDate = nutrientKeys.map(key => `${key}-${formattedDate}`);
 
-                    // cookfileValues オブジェクトを初期化
-                    const cookfileValues = [];
+                    console.log(nutrientKeysWithDate);
 
-                    // 各キーに対して、ローカルストレージから値を取得して格納
-                    cookfilekeys.forEach(key => {
-                        // ローカルストレージから値を取得
-                        const value = localStorage.getItem(key);
-
-                        // ローカルストレージに値があれば、値を格納。なければnullを格納
-                        cookfileValues.push({
-                            name: key,  // カテゴリ名（例: 'carbohydrate-filename'）
-                            image: value ? value : null  // 画像のパス（nullの場合もある）
-                        });
-                    });
-
-                    // フロントエンドで送信するデータ
-                    const data = {
-                        cookfiles: cookfileValues  // 各カテゴリ名と画像のペアを送信
-                    };
-
-                    // fetchでデータを送信
-                    fetch('/save-cook-data', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // CSRFトークンを設定
-                        },
-                        body: JSON.stringify(data),
-                    })
-                    .then(response => response.json())
-                    .then(data => console.log('Data saved:', data))
-                    .catch(error => console.error('Error:', error));
-
-
-                    const allSaved = nutrientKeys.every(key => localStorage.getItem(key));
+                    const allSaved = nutrientKeysWithDate.every(key => localStorage.getItem(key));
                     const goalToggleState = localStorage.getItem('goal_toggle_state');
                     const randomName = (() => {
                         const names = [
